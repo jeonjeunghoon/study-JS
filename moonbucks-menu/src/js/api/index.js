@@ -1,65 +1,77 @@
-const BASE_URL = "http://localhost:3000/api"
+const BASE_URL = 'http://localhost:3000/api';
 
 const HTTP_METHOD = {
-	POST(name) {
-		return {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({ name }),
-		}
-	},
-	PUT(name) {
-		return {
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: name ? JSON.stringify({ name }) : null,
-		}
-	},
-	DELETE() {
-		return {
-			method: "DELETE"
-		}
-	}
-}
+  POST(name) {
+    return {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name }),
+    };
+  },
+  PUT(name) {
+    return {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: name ? JSON.stringify({ name }) : null,
+    };
+  },
+  DELETE() {
+    return {
+      method: 'DELETE',
+    };
+  },
+};
 
 const request = async (url, option) => {
-	const response = await fetch(url, option);
-	if (!response.ok) {
-		alert("에러가 발생했습니다.");
-		console.error(e);
-	}
-	return response.json();
-}
+  const response = await fetch(url, option);
+  if (!response.ok) {
+    alert('에러가 발생했습니다.');
+    console.error(e);
+  }
+  return response.json();
+};
 
 const requestWithoutJson = async (url, option) => {
-	const response = await fetch(url, option);
-	if (!response.ok) {
-		alert("에러가 발생했습니다.");
-		console.error(e);
-	}
-	return response;
-}
+  const response = await fetch(url, option);
+  if (!response.ok) {
+    alert('에러가 발생했습니다.');
+    console.error(e);
+  }
+  return response;
+};
 
 const MenuApi = {
-	async getAllMenuByCategory(category) {
-		return request(`${BASE_URL}/category/${category}/menu`);
-	},
-	async addMenu(category, name) {
-		return request(`${BASE_URL}/category/${category}/menu`, HTTP_METHOD.POST(name));
-	},
-	async editMenu(category, menuId, name) {
-		return request(`${BASE_URL}/category/${category}/menu/${menuId}`, HTTP_METHOD.PUT(name));
-	},
-	async toggleSoldOutMenu(category, menuId) {
-		return request(`${BASE_URL}/category/${category}/menu/${menuId}/soldout`, HTTP_METHOD.PUT());
-	},
-	async removeMenu(category, menuId) {
-		return requestWithoutJson(`${BASE_URL}/category/${category}/menu/${menuId}`, HTTP_METHOD.DELETE());
-	}
-}
+  async getAllMenuByCategory(category) {
+    return request(`${BASE_URL}/category/${category}/menu`);
+  },
+  async addMenu(category, name) {
+    return request(
+      `${BASE_URL}/category/${category}/menu`,
+      HTTP_METHOD.POST(name)
+    );
+  },
+  async editMenu(category, menuId, name) {
+    return request(
+      `${BASE_URL}/category/${category}/menu/${menuId}`,
+      HTTP_METHOD.PUT(name)
+    );
+  },
+  async toggleSoldOutMenu(category, menuId) {
+    return request(
+      `${BASE_URL}/category/${category}/menu/${menuId}/soldout`,
+      HTTP_METHOD.PUT()
+    );
+  },
+  async removeMenu(category, menuId) {
+    return requestWithoutJson(
+      `${BASE_URL}/category/${category}/menu/${menuId}`,
+      HTTP_METHOD.DELETE()
+    );
+  },
+};
 
-export default MenuApi
+export default MenuApi;
